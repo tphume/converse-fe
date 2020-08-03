@@ -15,9 +15,11 @@ const useListStyles = makeStyles((theme: Theme) => {
   return createStyles({
     container: {
       alignItems: "flex-end",
+      padding: "4px 8px 4px 8px",
+      borderRadius: "3px",
     },
     icon: {
-      minWidth: "35px",
+      minWidth: "30px",
     },
     text: {
       fontSize: "0.95em",
@@ -77,10 +79,15 @@ const useStyles = makeStyles((theme: Theme) => {
       borderRadius: "5px",
     },
     container: {
-      padding: "8px 8px 8px 8px",
+      padding: "12px 8px 12px 8px",
     },
     break: {
-      margin: "3px 0 3px 0",
+      margin: "4px 0 4px 0",
+      backgroundColor: "#e8eef3",
+      height: "2px",
+    },
+    svg: {
+      fontSize: "1.3rem",
     },
   });
 });
@@ -91,11 +98,23 @@ export default function NavBar() {
   return (
     <nav className={classes.root}>
       <List className={classes.container}>
-        <ListItemLink to="/friends" primary="Friends" icon={<People />} />
+        <ListItemLink
+          to="/friends"
+          primary="Friends"
+          icon={<People classes={{ root: classes.svg }} />}
+        />
         <Divider className={classes.break} />
-        <ListItemLink to="/messages" primary="Messages" icon={<Message />} />
+        <ListItemLink
+          to="/messages"
+          primary="Messages"
+          icon={<Message classes={{ root: classes.svg }} />}
+        />
         <Divider className={classes.break} />
-        <ListItemLink to="/help" primary="Help" icon={<Help />} />
+        <ListItemLink
+          to="/help"
+          primary="Help"
+          icon={<Help classes={{ root: classes.svg }} />}
+        />
       </List>
     </nav>
   );
