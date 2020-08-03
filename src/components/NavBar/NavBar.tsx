@@ -6,7 +6,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
-import { create } from "domain";
 
 // ListItem Sub-Component
 const useListStyles = makeStyles((them: Theme) => {
@@ -68,7 +67,7 @@ export default function NavBar() {
         <Divider />
         <ListItemLink to="/messages" primary="Messages" />
         <Divider />
-        <ListItemLink to="/help" primary="Help" />
+        <ListItemLink to="/" primary="Help" />
       </List>
     </nav>
   );
