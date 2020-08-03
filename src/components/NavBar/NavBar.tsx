@@ -6,13 +6,26 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
+import People from "@material-ui/icons/People";
+import Message from "@material-ui/icons/Message";
+import Help from "@material-ui/icons/Help";
 
-// ListItem Sub-Component
-const useListStyles = makeStyles((them: Theme) => {
+// List Sub-Component
+const useListStyles = makeStyles((theme: Theme) => {
   return createStyles({
     container: {
-      width: "80%",
-      margin: "0.5em 10% 0.5em",
+      alignItems: "flex-end",
+    },
+    icon: {
+      minWidth: "35px",
+    },
+    text: {
+      fontSize: "0.95em",
+      fontWeight: 600,
+      color: theme.palette.primary.dark,
+    },
+    textBox: {
+      margin: 0,
     },
   });
 });
@@ -26,8 +39,6 @@ interface ListItemLinkProps {
 function ListItemLink(props: ListItemLinkProps) {
   const { icon, primary, to } = props;
 
-  const classes = useListStyles();
-
   const renderLink = React.useMemo(
     () =>
       React.forwardRef<any, Omit<LinkProps, "to">>((itemProps, ref) => (
@@ -36,11 +47,22 @@ function ListItemLink(props: ListItemLinkProps) {
     [to]
   );
 
+  const classes = useListStyles();
+
   return (
     <li>
       <ListItem button component={renderLink} className={classes.container}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-        <ListItemText primary={primary} />
+        {icon ? (
+          <ListItemIcon
+            classes={{ root: classes.icon, alignItemsFlexStart: classes.icon }}
+          >
+            {icon}
+          </ListItemIcon>
+        ) : null}
+        <ListItemText
+          primary={primary}
+          classes={{ primary: classes.text, root: classes.textBox }}
+        />
       </ListItem>
     </li>
   );
@@ -51,8 +73,14 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     root: {
       backgroundColor: theme.palette.secondary.main,
-      width: "10em",
-      borderRadius: "3px",
+      maxWidth: "15em",
+      borderRadius: "5px",
+    },
+    container: {
+      padding: "8px 8px 8px 8px",
+    },
+    break: {
+      margin: "3px 0 3px 0",
     },
   });
 });
@@ -62,12 +90,12 @@ export default function NavBar() {
 
   return (
     <nav className={classes.root}>
-      <List>
-        <ListItemLink to="/friends" primary="Friends" />
-        <Divider />
-        <ListItemLink to="/messages" primary="Messages" />
-        <Divider />
-        <ListItemLink to="/" primary="Help" />
+      <List className={classes.container}>
+        <ListItemLink to="/friends" primary="Friends" icon={<People />} />
+        <Divider className={classes.break} />
+        <ListItemLink to="/messages" primary="Messages" icon={<Message />} />
+        <Divider className={classes.break} />
+        <ListItemLink to="/help" primary="Help" icon={<Help />} />
       </List>
     </nav>
   );
