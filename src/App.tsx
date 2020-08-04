@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./rootReducer";
 
 import Typography from "@material-ui/core/Typography";
+import Login from "./pages/Login";
 import NavBar from "./components/NavBar/NavBar";
 import Friends from "./pages/Friends";
 import Messages from "./pages/Messages";
@@ -15,7 +16,7 @@ export default function App() {
   if (name === "") {
     return (
       <main>
-        <Typography variant="h1">You are not logged in</Typography>
+        <Login />
       </main>
     );
   }
@@ -23,6 +24,7 @@ export default function App() {
   return (
     <main>
       <NavBar />
+      <Typography variant="h1">{`You are logged in as ${name}`}</Typography>
       <Switch>
         <Route exact path="/friends">
           <Friends />
