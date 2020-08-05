@@ -26,7 +26,7 @@ export default function App() {
       <NavBar />
       <Typography variant="h1">{`You are logged in as ${name}`}</Typography>
       <Switch>
-        <Route exact path="/friends">
+        <Route exact path="/(friends|)">
           <Friends />
         </Route>
         <Route exact path="/messages">
