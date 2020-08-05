@@ -20,15 +20,16 @@ const useStyles = makeStyles((theme: Theme) => {
       flexDirection: "column",
     },
     hero: {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
+      boxShadow: "4px 0 6px 4px hsla(0, 0%, 0%, 0.2)",
     },
     heroHeader: {
-      color: theme.palette.primary.main,
+      color: "white",
       fontWeight: 700,
     },
     heroDesc: {
       marginTop: "2px",
-      color: theme.palette.primary.dark,
+      color: "white",
       fontWeight: 400,
       lineHeight: 1.4,
     },
