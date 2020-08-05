@@ -15,6 +15,15 @@ const theme = createMuiTheme({
       default: `#FFFFFF`,
     },
   },
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        "html, body, #root, main, section": {
+          height: "100%",
+        },
+      },
+    },
+  },
 });
 
 export default theme;
