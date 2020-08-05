@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
+import "typeface-lato";
 
 const theme = createMuiTheme({
   palette: {
@@ -14,6 +15,9 @@ const theme = createMuiTheme({
     background: {
       default: `#FFFFFF`,
     },
+  },
+  typography: {
+    fontFamily: "Lato",
   },
   overrides: {
     MuiCssBaseline: {
