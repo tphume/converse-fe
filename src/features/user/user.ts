@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, Dispatch } from "@reduxjs/toolkit";
+import { AppThunk } from "../../store";
 
 // Error types
 type error = "none" | "bad request" | "network error";
@@ -65,7 +66,7 @@ function loginAPI(user: UserArgs): Promise<void> {
 }
 
 // Export thunks
-export function login(args: UserArgs) {
+export function login(args: UserArgs): AppThunk {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(beginLogin);
