@@ -11,9 +11,9 @@ import Messages from "./pages/Messages";
 import Help from "./pages/Help";
 
 export default function App() {
-  const { name } = useSelector((state: RootState) => state.user);
+  const { username } = useSelector((state: RootState) => state.user);
 
-  if (name === "") {
+  if (username === "") {
     return (
       <main>
         <Login />
@@ -24,7 +24,7 @@ export default function App() {
   return (
     <main>
       <NavBar />
-      <Typography variant="h1">{`You are logged in as ${name}`}</Typography>
+      <Typography variant="h1">{`You are logged in as ${username}`}</Typography>
       <Switch>
         <Route exact path="/(friends|)">
           <Friends />

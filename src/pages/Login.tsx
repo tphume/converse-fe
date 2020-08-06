@@ -86,7 +86,13 @@ export default function Login() {
             >
               Welcome Aboard
             </Typography>
-            <Button onClick={() => dispatch(login("Phume"))}>Login</Button>
+            <Button
+              onClick={() =>
+                dispatch(login({ username: "Phume", password: "somepassword" }))
+              }
+            >
+              Login
+            </Button>
           </div>
         </Grid>
       </Grid>
