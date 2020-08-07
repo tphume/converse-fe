@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { login } from "../features/user/user";
@@ -73,8 +73,19 @@ const useStyles = makeStyles((theme: Theme) => {
 });
 
 export default function Login() {
+  // Other external stuff
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  // Define our local state
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  // On unmount reset local state
+  useEffect(() => {
+    setUsername("");
+    setPassword("");
+  }, []);
 
   return (
     <section>
@@ -109,6 +120,8 @@ export default function Login() {
                 variant="outlined"
                 label="Username"
                 size="small"
+                onChange={(event) => setUsername(event.target.value)}
+                value={username}
                 fullWidth
                 classes={{ root: classes.formInput }}
               />
@@ -118,6 +131,8 @@ export default function Login() {
                 type="password"
                 size="small"
                 autoComplete="current-password"
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
                 fullWidth
                 classes={{ root: classes.formInput }}
               />
@@ -129,7 +144,10 @@ export default function Login() {
                   className={classes.formLogin}
                   onClick={() =>
                     dispatch(
-                      login({ username: "Phume", password: "somepassword" })
+                      login({
+                        username,
+                        password,
+                      })
                     )
                   }
                 >
