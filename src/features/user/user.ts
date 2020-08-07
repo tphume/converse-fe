@@ -69,11 +69,11 @@ function loginAPI(user: UserArgs): Promise<void> {
 export function login(args: UserArgs): AppThunk {
   return async (dispatch: Dispatch) => {
     try {
-      dispatch(beginLogin);
+      dispatch(beginLogin());
       await loginAPI(args);
-      dispatch(successLogin({ username: args.username }));
+      return dispatch(successLogin({ username: args.username }));
     } catch (e) {
-      dispatch(failureLogin({ error: "network error" }));
+      return dispatch(failureLogin({ error: "network error" }));
     }
   };
 }

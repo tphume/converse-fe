@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../rootReducer";
 
 import { login } from "../features/user/user";
 
@@ -76,6 +77,7 @@ export default function Login() {
   // Other external stuff
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { loading } = useSelector((state: RootState) => state.user);
 
   // Define our local state
   const [username, setUsername] = useState("");
@@ -124,6 +126,7 @@ export default function Login() {
                 value={username}
                 fullWidth
                 classes={{ root: classes.formInput }}
+                disabled={loading}
               />
               <TextField
                 variant="outlined"
@@ -135,6 +138,7 @@ export default function Login() {
                 value={password}
                 fullWidth
                 classes={{ root: classes.formInput }}
+                disabled={loading}
               />
               <div className={classes.formButtons}>
                 <Button
@@ -142,6 +146,7 @@ export default function Login() {
                   size="small"
                   color="primary"
                   className={classes.formLogin}
+                  disabled={loading}
                   onClick={() =>
                     dispatch(
                       login({
@@ -158,6 +163,7 @@ export default function Login() {
                   size="small"
                   color="primary"
                   className={classes.formSignup}
+                  disabled={loading}
                 >
                   Signup
                 </Button>
