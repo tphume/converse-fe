@@ -24,7 +24,6 @@ const useListStyles = makeStyles((theme: Theme) => {
     text: {
       fontSize: "0.95em",
       fontWeight: 600,
-      color: theme.palette.primary.dark,
     },
     textBox: {
       margin: 0,
