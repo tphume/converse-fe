@@ -54,11 +54,19 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.username = "";
     },
+    resetError: (state) => {
+      state.error = "none";
+    },
   },
 });
 
 // List of actions
-const { beginLogin, successLogin, failureLogin } = userSlice.actions;
+const {
+  beginLogin,
+  successLogin,
+  failureLogin,
+  resetError,
+} = userSlice.actions;
 
 // API calls
 function loginAPI(user: UserArgs): Promise<void> {
@@ -85,6 +93,9 @@ export function login(args: UserArgs): AppThunk {
     }
   };
 }
+
+// Export helper actions
+export { resetError };
 
 // Export reducer on configure store only
 export default userSlice.reducer;
