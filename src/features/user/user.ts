@@ -62,6 +62,9 @@ const { beginLogin, successLogin, failureLogin } = userSlice.actions;
 
 // API calls
 function loginAPI(user: UserArgs): Promise<void> {
+  if (user.username.length < 4 || user.password.length < 5) {
+    throw new Error("bad request");
+  }
   return new Promise<void>((resolve) => setTimeout(resolve, 1000));
 }
 
@@ -73,7 +76,12 @@ export function login(args: UserArgs): AppThunk {
       await loginAPI(args);
       return dispatch(successLogin({ username: args.username }));
     } catch (e) {
-      return dispatch(failureLogin({ error: "network error" }));
+      switch (e.toString()) {
+        case "bad request":
+          return dispatch(failureLogin({ error: "bad request" }));
+        default:
+          return dispatch(failureLogin({ error: "network error" }));
+      }
     }
   };
 }

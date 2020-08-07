@@ -127,18 +127,25 @@ export default function Login() {
                 fullWidth
                 classes={{ root: classes.formInput }}
                 disabled={loading}
+                error={tooShort(username.length, 4)}
+                helperText={
+                  tooShort(username.length, 4) ? "Username too short" : ""
+                }
               />
               <TextField
                 variant="outlined"
                 label="Password"
                 type="password"
                 size="small"
-                autoComplete="current-password"
                 onChange={(event) => setPassword(event.target.value)}
                 value={password}
                 fullWidth
                 classes={{ root: classes.formInput }}
                 disabled={loading}
+                error={tooShort(password.length, 5)}
+                helperText={
+                  tooShort(password.length, 5) ? "Password too short" : ""
+                }
               />
               <div className={classes.formButtons}>
                 <Button
@@ -174,4 +181,13 @@ export default function Login() {
       </Grid>
     </section>
   );
+}
+
+// Helper function
+function tooShort(current: number, length: number): boolean {
+  if (current !== 0 && current < length) {
+    return true;
+  }
+
+  return false;
 }
