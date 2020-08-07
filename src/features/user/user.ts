@@ -62,7 +62,7 @@ const { beginLogin, successLogin, failureLogin } = userSlice.actions;
 
 // API calls
 function loginAPI(user: UserArgs): Promise<void> {
-  return new Promise<void>((resolve) => resolve());
+  return new Promise<void>((resolve) => setTimeout(resolve, 1000));
 }
 
 // Export thunks

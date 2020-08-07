@@ -6,6 +6,7 @@ import { login } from "../features/user/user";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -43,13 +44,30 @@ const useStyles = makeStyles((theme: Theme) => {
     formBox: {
       height: "100%",
       margin: "auto",
-      maxWidth: "500px",
+      maxWidth: "400px",
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
     },
     formHeader: {
       marginBottom: "5px",
+    },
+    formInput: {
+      marginTop: "12px",
+    },
+    formButtons: {
+      width: "100%",
+      margin: "15px 0 0 0",
+      display: "flex",
+      justifyContent: "space-between",
+    },
+    formLogin: {
+      width: "45%",
+      marginRight: "13%",
+      flexGrow: 1,
+    },
+    formSignup: {
+      flexGrow: 1,
     },
   });
 });
@@ -86,13 +104,47 @@ export default function Login() {
             >
               Welcome Aboard
             </Typography>
-            <Button
-              onClick={() =>
-                dispatch(login({ username: "Phume", password: "somepassword" }))
-              }
-            >
-              Login
-            </Button>
+            <form autoComplete="off">
+              <TextField
+                variant="outlined"
+                label="Username"
+                size="small"
+                fullWidth
+                classes={{ root: classes.formInput }}
+              />
+              <TextField
+                variant="outlined"
+                label="Password"
+                type="password"
+                size="small"
+                autoComplete="current-password"
+                fullWidth
+                classes={{ root: classes.formInput }}
+              />
+              <div className={classes.formButtons}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="primary"
+                  className={classes.formLogin}
+                  onClick={() =>
+                    dispatch(
+                      login({ username: "Phume", password: "somepassword" })
+                    )
+                  }
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color="primary"
+                  className={classes.formSignup}
+                >
+                  Signup
+                </Button>
+              </div>
+            </form>
           </div>
         </Grid>
       </Grid>
