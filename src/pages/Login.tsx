@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../rootReducer";
 
-import { login } from "../features/user/user";
-
+import { login, resetError } from "../features/user/user";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
@@ -70,6 +71,15 @@ const useStyles = makeStyles((theme: Theme) => {
     formSignup: {
       flexGrow: 1,
     },
+    alert: {
+      marginTop: "12px",
+      width: "100%",
+      position: "relative",
+      transform: "none",
+      left: "auto",
+      right: "auto",
+      bottom: "auto",
+    },
   });
 });
 
@@ -77,7 +87,7 @@ export default function Login() {
   // Other external stuff
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: RootState) => state.user);
+  const { loading, error } = useSelector((state: RootState) => state.user);
 
   // Define our local state
   const [username, setUsername] = useState("");
@@ -88,6 +98,12 @@ export default function Login() {
     setUsername("");
     setPassword("");
   }, []);
+
+  // Handle function
+  const onAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+    console.log("Hello");
+    dispatch(resetError());
+  };
 
   return (
     <section>
@@ -176,6 +192,16 @@ export default function Login() {
                 </Button>
               </div>
             </form>
+            <Snackbar
+              open={error !== "none"}
+              classes={{ root: classes.alert }}
+              onClose={onAlertClose}
+              autoHideDuration={5000}
+            >
+              <Alert severity="error" onClose={onAlertClose}>
+                An error occured during login attempt
+              </Alert>
+            </Snackbar>
           </div>
         </Grid>
       </Grid>

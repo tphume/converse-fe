@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, Dispatch } from "@reduxjs/toolkit";
 import { AppThunk } from "../../store";
 
 // Error types
-type error = "none" | "bad request" | "network error";
+type error = "none" | "bad request" | "match not found" | "network error";
 
 // Arguments for api call
 interface UserArgs {
@@ -55,6 +55,7 @@ export const userSlice = createSlice({
       state.username = "";
     },
     resetError: (state) => {
+      console.log("umm ");
       state.error = "none";
     },
   },
@@ -73,6 +74,7 @@ function loginAPI(user: UserArgs): Promise<void> {
   if (user.username.length < 4 || user.password.length < 5) {
     throw new Error("bad request");
   }
+
   return new Promise<void>((resolve) => setTimeout(resolve, 1000));
 }
 
@@ -85,7 +87,7 @@ export function login(args: UserArgs): AppThunk {
       return dispatch(successLogin({ username: args.username }));
     } catch (e) {
       switch (e.toString()) {
-        case "bad request":
+        case "Error: bad request":
           return dispatch(failureLogin({ error: "bad request" }));
         default:
           return dispatch(failureLogin({ error: "network error" }));
