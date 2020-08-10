@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Friends from "./pages/Friends";
 import Messages from "./pages/Messages";
 import Help from "./pages/Help";
+import Home from "./pages/Home";
 
 export default function App() {
   const { username } = useSelector((state: RootState) => state.user);
@@ -26,7 +27,7 @@ export default function App() {
       <NavBar />
       <Typography variant="h1">{`You are logged in as ${username}`}</Typography>
       <Switch>
-        <Route exact path="/(friends|)">
+        <Route exact path="/friends">
           <Friends />
         </Route>
         <Route exact path="/messages">
@@ -34,6 +35,9 @@ export default function App() {
         </Route>
         <Route exact path="/help">
           <Help />
+        </Route>
+        <Route exact path="/">
+          <Home />
         </Route>
       </Switch>
     </main>

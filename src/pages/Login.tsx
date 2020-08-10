@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => {
     hero: {
       paddingTop: "15%",
       backgroundColor: theme.palette.primary.main,
-      boxShadow: "4px 0 6px 4px hsla(0, 0%, 0%, 0.2)",
+      boxShadow: "4px 4px 6px 4px hsla(0, 0%, 0%, 0.2)",
     },
     heroBox: {
       padding: "12px",
