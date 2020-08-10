@@ -99,7 +99,6 @@ export default function Login() {
 
   // Handle function
   const onAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
-    console.log("Hello");
     dispatch(resetError());
   };
 
