@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../rootReducer";
-
 import { login, resetError } from "../features/user/user";
+
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme: Theme) => {
       height: "100%",
     },
     hero: {
-      height: "100%",
       paddingTop: "15%",
       backgroundColor: theme.palette.primary.main,
       boxShadow: "4px 0 6px 4px hsla(0, 0%, 0%, 0.2)",
     },
     heroBox: {
+      padding: "12px",
       height: "100%",
       margin: "auto",
       maxWidth: "400px",
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => {
       lineHeight: 1.4,
     },
     form: {
-      height: "100%",
+      padding: "12px",
       paddingTop: "15%",
     },
     formBox: {
@@ -108,7 +108,7 @@ export default function Login() {
   return (
     <section>
       <Grid container classes={{ container: classes.container }}>
-        <Grid item sm={5} classes={{ item: classes.hero }}>
+        <Grid item xs={12} sm={5} classes={{ item: classes.hero }}>
           <div className={classes.heroBox}>
             <Typography
               variant="h3"
@@ -124,7 +124,7 @@ export default function Login() {
             </Typography>
           </div>
         </Grid>
-        <Grid item sm={7} classes={{ item: classes.form }}>
+        <Grid item xs={12} sm={7} classes={{ item: classes.form }}>
           <div className={classes.formBox}>
             <Typography
               variant="h4"
