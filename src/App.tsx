@@ -1,26 +1,41 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "./rootReducer";
 
-function App() {
+import Typography from "@material-ui/core/Typography";
+import Login from "./pages/Login";
+import NavBar from "./components/NavBar/NavBar";
+import Friends from "./pages/Friends";
+import Messages from "./pages/Messages";
+import Help from "./pages/Help";
+
+export default function App() {
+  const { username } = useSelector((state: RootState) => state.user);
+
+  if (username === "") {
+    return (
+      <main>
+        <Login />
+      </main>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <NavBar />
+      <Typography variant="h1">{`You are logged in as ${username}`}</Typography>
+      <Switch>
+        <Route exact path="/(friends|)">
+          <Friends />
+        </Route>
+        <Route exact path="/messages">
+          <Messages />
+        </Route>
+        <Route exact path="/help">
+          <Help />
+        </Route>
+      </Switch>
+    </main>
   );
 }
-
-export default App;
