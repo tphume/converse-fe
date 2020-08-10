@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) => {
     },
     heroBox: {
       padding: "12px",
-      height: "100%",
       margin: "auto",
       maxWidth: "400px",
       display: "flex",
@@ -44,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) => {
       paddingTop: "15%",
     },
     formBox: {
-      height: "100%",
       margin: "auto",
       maxWidth: "400px",
       display: "flex",
