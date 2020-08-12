@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Home from "@material-ui/icons/Home";
 import People from "@material-ui/icons/People";
-import Message from "@material-ui/icons/Message";
+import ChatBubble from "@material-ui/icons/ChatBubble";
 import Help from "@material-ui/icons/Help";
 
 // List Sub-Component
@@ -157,7 +157,7 @@ export default function NavBar() {
             current={location.pathname}
             primary="Messages"
             icon={
-              <Message
+              <ChatBubble
                 classes={{ root: classes.svg }}
                 color={setIconColor("/messages", location.pathname)}
               />

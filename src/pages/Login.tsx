@@ -162,19 +162,21 @@ export default function Login() {
               />
               <div className={classes.formButtons}>
                 <Button
+                  type="submit"
                   variant="contained"
                   size="small"
                   color="primary"
                   className={classes.formLogin}
                   disabled={loading}
-                  onClick={() =>
-                    dispatch(
+                  onClick={(event) => {
+                    event.preventDefault();
+                    return dispatch(
                       login({
                         username,
                         password,
                       })
-                    )
-                  }
+                    );
+                  }}
                 >
                   Login
                 </Button>
