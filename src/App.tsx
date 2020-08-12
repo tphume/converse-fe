@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./rootReducer";
 
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import Hidden from "@material-ui/core/Hidden";
 import Login from "./pages/Login";
 import NavBar from "./components/NavBar/NavBar";
 import Friends from "./pages/Friends";
@@ -34,7 +35,9 @@ export default function App() {
   return (
     <>
       <main className={classes.container}>
-        <NavBar />
+        <Hidden xsDown>
+          <NavBar />
+        </Hidden>
         <Switch>
           <Route exact path="/friends">
             <Friends />

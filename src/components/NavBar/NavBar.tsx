@@ -89,7 +89,7 @@ function ListItemLink(props: ListProps) {
 }
 
 // Main component starts here
-const drawerWidth = "200px";
+const drawerWidth = "240px";
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
