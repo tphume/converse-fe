@@ -2,11 +2,11 @@ import React from "react";
 import { NavLink, LinkProps, useLocation } from "react-router-dom";
 
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Divider from "@material-ui/core/Divider";
 import Home from "@material-ui/icons/Home";
 import People from "@material-ui/icons/People";
 import Message from "@material-ui/icons/Message";
@@ -20,21 +20,25 @@ const useListStyles = makeStyles((theme: Theme) => {
       padding: "6px 8px 6px 8px",
       borderRadius: "3px",
     },
+    list: {
+      backgroundColor: theme.palette.secondary.main,
+    },
     icon: {
       minWidth: "30px",
     },
     text: {
-      fontSize: "1em",
+      fontSize: "1.1em",
       fontWeight: 600,
     },
     textColor: {
       color: theme.palette.primary.main,
-      fontSize: "1em",
+      fontSize: "1.1em",
       fontWeight: 600,
     },
     textBox: {
       margin: 0,
     },
+    empty: {},
   });
 });
 
@@ -60,10 +64,10 @@ function ListItemLink(props: ListProps) {
   );
 
   const classes = useListStyles();
-  const color = setTextColor(current, to);
+  const color = isCurrent(current, to);
 
   return (
-    <li>
+    <li className={color ? classes.list : classes.empty}>
       <ListItem button component={renderLink} className={classes.container}>
         {icon ? (
           <ListItemIcon
@@ -85,12 +89,19 @@ function ListItemLink(props: ListProps) {
 }
 
 // Main component starts here
+const drawerWidth = "200px";
+
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
-    root: {
-      backgroundColor: theme.palette.secondary.main,
-      maxWidth: "15em",
-      borderRadius: "5px",
+    drawer: {
+      [theme.breakpoints.up("sm")]: {
+        height: "100%",
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    drawerPaper: {
+      width: drawerWidth,
     },
     container: {
       padding: "12px 8px 12px 8px",
@@ -111,62 +122,66 @@ export default function NavBar() {
   const location = useLocation();
 
   return (
-    <nav className={classes.root}>
-      <List className={classes.container}>
-        <ListItemLink
-          to="/"
-          current={location.pathname}
-          primary="Home"
-          icon={
-            <Home
-              classes={{ root: classes.svg }}
-              color={setIconColor("/", location.pathname)}
-            />
-          }
-        />
-        <Divider className={classes.break} />
-        <ListItemLink
-          to="/friends"
-          current={location.pathname}
-          primary="Friends"
-          icon={
-            <People
-              classes={{ root: classes.svg }}
-              color={setIconColor("/friends", location.pathname)}
-            />
-          }
-        />
-        <Divider className={classes.break} />
-        <ListItemLink
-          to="/messages"
-          current={location.pathname}
-          primary="Messages"
-          icon={
-            <Message
-              classes={{ root: classes.svg }}
-              color={setIconColor("/messages", location.pathname)}
-            />
-          }
-        />
-        <Divider className={classes.break} />
-        <ListItemLink
-          to="/help"
-          current={location.pathname}
-          primary="Help"
-          icon={
-            <Help
-              classes={{ root: classes.svg }}
-              color={setIconColor("/help", location.pathname)}
-            />
-          }
-        />
-      </List>
+    <nav className={classes.drawer}>
+      <Drawer
+        variant="permanent"
+        anchor="left"
+        open
+        classes={{ paper: classes.drawerPaper }}
+      >
+        <List className={classes.container}>
+          <ListItemLink
+            to="/"
+            current={location.pathname}
+            primary="Home"
+            icon={
+              <Home
+                classes={{ root: classes.svg }}
+                color={setIconColor("/", location.pathname)}
+              />
+            }
+          />
+          <ListItemLink
+            to="/friends"
+            current={location.pathname}
+            primary="Friends"
+            icon={
+              <People
+                classes={{ root: classes.svg }}
+                color={setIconColor("/friends", location.pathname)}
+              />
+            }
+          />
+          <ListItemLink
+            to="/messages"
+            current={location.pathname}
+            primary="Messages"
+            icon={
+              <Message
+                classes={{ root: classes.svg }}
+                color={setIconColor("/messages", location.pathname)}
+              />
+            }
+          />
+          <ListItemLink
+            to="/help"
+            current={location.pathname}
+            primary="Help"
+            icon={
+              <Help
+                classes={{ root: classes.svg }}
+                color={setIconColor("/help", location.pathname)}
+              />
+            }
+          />
+        </List>
+      </Drawer>
     </nav>
   );
 }
 
 // Helper function to set colors
-function setTextColor(current: string, route: string): boolean {
+function isCurrent(current: string, route: string): boolean {
   return current === route ? true : false;
 }
 
