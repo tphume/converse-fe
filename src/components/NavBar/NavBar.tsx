@@ -1,13 +1,15 @@
 import React from "react";
-import { NavLink, LinkProps } from "react-router-dom";
+import { NavLink, LinkProps, useLocation } from "react-router-dom";
+
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Divider from "@material-ui/core/Divider";
+import Home from "@material-ui/icons/Home";
 import People from "@material-ui/icons/People";
-import Message from "@material-ui/icons/Message";
+import ChatBubble from "@material-ui/icons/ChatBubble";
 import Help from "@material-ui/icons/Help";
 
 // List Sub-Component
@@ -15,19 +17,28 @@ const useListStyles = makeStyles((theme: Theme) => {
   return createStyles({
     container: {
       alignItems: "flex-end",
-      padding: "4px 8px 4px 8px",
+      padding: "6px 8px 6px 8px",
       borderRadius: "3px",
+    },
+    list: {
+      backgroundColor: theme.palette.secondary.main,
     },
     icon: {
       minWidth: "30px",
     },
     text: {
-      fontSize: "0.95em",
+      fontSize: "1.1em",
+      fontWeight: 600,
+    },
+    textColor: {
+      color: theme.palette.primary.main,
+      fontSize: "1.1em",
       fontWeight: 600,
     },
     textBox: {
       margin: 0,
     },
+    empty: {},
   });
 });
 
@@ -37,8 +48,12 @@ interface ListItemLinkProps {
   to: string;
 }
 
-function ListItemLink(props: ListItemLinkProps) {
-  const { icon, primary, to } = props;
+interface ListProps extends ListItemLinkProps {
+  current: string;
+}
+
+function ListItemLink(props: ListProps) {
+  const { icon, primary, to, current } = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -49,9 +64,10 @@ function ListItemLink(props: ListItemLinkProps) {
   );
 
   const classes = useListStyles();
+  const color = isCurrent(current, to);
 
   return (
-    <li>
+    <li className={color ? classes.list : classes.empty}>
       <ListItem button component={renderLink} className={classes.container}>
         {icon ? (
           <ListItemIcon
@@ -62,7 +78,10 @@ function ListItemLink(props: ListItemLinkProps) {
         ) : null}
         <ListItemText
           primary={primary}
-          classes={{ primary: classes.text, root: classes.textBox }}
+          classes={{
+            primary: color ? classes.textColor : classes.text,
+            root: classes.textBox,
+          }}
         />
       </ListItem>
     </li>
@@ -70,12 +89,19 @@ function ListItemLink(props: ListItemLinkProps) {
 }
 
 // Main component starts here
+const drawerWidth = "240px";
+
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
-    root: {
-      backgroundColor: theme.palette.secondary.main,
-      maxWidth: "15em",
-      borderRadius: "5px",
+    drawer: {
+      [theme.breakpoints.up("sm")]: {
+        height: "100%",
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    drawerPaper: {
+      width: drawerWidth,
     },
     container: {
       padding: "12px 8px 12px 8px",
@@ -93,28 +119,75 @@ const useStyles = makeStyles((theme: Theme) => {
 
 export default function NavBar() {
   const classes = useStyles();
+  const location = useLocation();
 
   return (
-    <nav className={classes.root}>
-      <List className={classes.container}>
-        <ListItemLink
-          to="/friends"
-          primary="Friends"
-          icon={<People classes={{ root: classes.svg }} />}
-        />
-        <Divider className={classes.break} />
-        <ListItemLink
-          to="/messages"
-          primary="Messages"
-          icon={<Message classes={{ root: classes.svg }} />}
-        />
-        <Divider className={classes.break} />
-        <ListItemLink
-          to="/help"
-          primary="Help"
-          icon={<Help classes={{ root: classes.svg }} />}
-        />
-      </List>
+    <nav className={classes.drawer}>
+      <Drawer
+        variant="permanent"
+        anchor="left"
+        open
+        classes={{ paper: classes.drawerPaper }}
+      >
+        <List className={classes.container}>
+          <ListItemLink
+            to="/"
+            current={location.pathname}
+            primary="Home"
+            icon={
+              <Home
+                classes={{ root: classes.svg }}
+                color={setIconColor("/", location.pathname)}
+              />
+            }
+          />
+          <ListItemLink
+            to="/friends"
+            current={location.pathname}
+            primary="Friends"
+            icon={
+              <People
+                classes={{ root: classes.svg }}
+                color={setIconColor("/friends", location.pathname)}
+              />
+            }
+          />
+          <ListItemLink
+            to="/messages"
+            current={location.pathname}
+            primary="Messages"
+            icon={
+              <ChatBubble
+                classes={{ root: classes.svg }}
+                color={setIconColor("/messages", location.pathname)}
+              />
+            }
+          />
+          <ListItemLink
+            to="/help"
+            current={location.pathname}
+            primary="Help"
+            icon={
+              <Help
+                classes={{ root: classes.svg }}
+                color={setIconColor("/help", location.pathname)}
+              />
+            }
+          />
+        </List>
+      </Drawer>
     </nav>
   );
+}
+
+// Helper function to set colors
+function isCurrent(current: string, route: string): boolean {
+  return current === route ? true : false;
+}
+
+function setIconColor(
+  current: string,
+  route: string
+): "inherit" | "primary" | "secondary" | "action" | "disabled" | "error" {
+  return current === route ? "primary" : "inherit";
 }

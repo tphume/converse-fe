@@ -55,7 +55,6 @@ export const userSlice = createSlice({
       state.username = "";
     },
     resetError: (state) => {
-      console.log("umm ");
       state.error = "none";
     },
   },

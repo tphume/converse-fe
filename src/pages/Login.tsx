@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => {
     hero: {
       paddingTop: "15%",
       backgroundColor: theme.palette.primary.main,
-      boxShadow: "4px 0 6px 4px hsla(0, 0%, 0%, 0.2)",
+      boxShadow: "4px 4px 6px 4px hsla(0, 0%, 0%, 0.2)",
     },
     heroBox: {
       padding: "12px",
@@ -99,7 +99,6 @@ export default function Login() {
 
   // Handle function
   const onAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
-    console.log("Hello");
     dispatch(resetError());
   };
 
@@ -163,19 +162,21 @@ export default function Login() {
               />
               <div className={classes.formButtons}>
                 <Button
+                  type="submit"
                   variant="contained"
                   size="small"
                   color="primary"
                   className={classes.formLogin}
                   disabled={loading}
-                  onClick={() =>
-                    dispatch(
+                  onClick={(event) => {
+                    event.preventDefault();
+                    return dispatch(
                       login({
                         username,
                         password,
                       })
-                    )
-                  }
+                    );
+                  }}
                 >
                   Login
                 </Button>
