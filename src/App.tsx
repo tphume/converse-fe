@@ -7,6 +7,7 @@ import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
 import Login from "./pages/Login";
 import NavBar from "./components/NavBar/NavBar";
+import BottomNav from "./components/BottomNav/BottomNav";
 import Friends from "./pages/Friends";
 import Messages from "./pages/Messages";
 import Help from "./pages/Help";
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     container: {
       display: "flex",
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+      },
     },
   });
 });
@@ -52,6 +56,9 @@ export default function App() {
             <Home />
           </Route>
         </Switch>
+        <Hidden smUp>
+          <BottomNav />
+        </Hidden>
       </main>
     </>
   );
