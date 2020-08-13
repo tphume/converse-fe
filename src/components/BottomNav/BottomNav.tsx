@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation, useHistory } from "react-router-dom";
 
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -8,9 +9,16 @@ import ChatBubble from "@material-ui/icons/ChatBubble";
 import Help from "@material-ui/icons/Help";
 
 export default function BottomNav() {
+  const location = useLocation();
+  const history = useHistory();
+
+  const handleChange = (event: React.ChangeEvent<{}>, value: string) => {
+    history.push(value);
+  };
+
   return (
-    <BottomNavigation>
-      <BottomNavigationAction label="Home" value="/home" icon={<Home />} />
+    <BottomNavigation value={location.pathname} onChange={handleChange}>
+      <BottomNavigationAction label="Home" value="/" icon={<Home />} />
       <BottomNavigationAction
         label="Friends"
         value="/friends"
