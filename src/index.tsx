@@ -4,9 +4,10 @@ import { ThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 import theme from "./theme";
-import store from "./store";
+import { store, persistor } from "./store";
 import App from "./App";
 
 ReactDOM.render(
@@ -15,7 +16,9 @@ ReactDOM.render(
       <CssBaseline />
       <Router>
         <Provider store={store}>
-          <App />
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
         </Provider>
       </Router>
     </ThemeProvider>
