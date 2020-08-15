@@ -51,8 +51,10 @@ export const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload.error;
     },
-    logout: (state) => {
+    onLogout: (state) => {
       state.username = "";
+      state.loading = false;
+      state.error = "none";
     },
     resetError: (state) => {
       state.error = "none";
@@ -65,6 +67,7 @@ const {
   beginLogin,
   successLogin,
   failureLogin,
+  onLogout,
   resetError,
 } = userSlice.actions;
 
@@ -92,6 +95,13 @@ export function login(args: UserArgs): AppThunk {
           return dispatch(failureLogin({ error: "network error" }));
       }
     }
+  };
+}
+
+// Clear state
+export function logout(): AppThunk {
+  return async (dispatch: Dispatch) => {
+    dispatch(onLogout());
   };
 }
 
