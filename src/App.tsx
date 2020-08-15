@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     container: {
       display: "flex",
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("xs")]: {
         flexDirection: "column",
       },
     },
