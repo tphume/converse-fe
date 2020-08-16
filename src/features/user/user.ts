@@ -54,7 +54,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload.error;
     },
-    onLogout: (state) => {
+    logout: (state) => {
       Object.assign(state, newState());
     },
     resetError: (state) => {
@@ -68,7 +68,7 @@ const {
   beginLogin,
   successLogin,
   failureLogin,
-  onLogout,
+  logout,
   resetError,
 } = userSlice.actions;
 
@@ -101,15 +101,8 @@ export function login(args: UserArgs): AppThunk {
   };
 }
 
-// Clear state
-export function logout(): AppThunk {
-  return async (dispatch: Dispatch) => {
-    dispatch(onLogout());
-  };
-}
-
 // Export helper actions
-export { resetError };
+export { resetError, logout };
 
 // Export reducer on configure store only
 export default userSlice.reducer;
