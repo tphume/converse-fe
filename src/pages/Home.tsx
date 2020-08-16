@@ -16,9 +16,15 @@ const useStyles = makeStyles((theme: Theme) => {
       flexDirection: "column",
       justifyContent: "start",
       alignItems: "center",
+      [theme.breakpoints.down("xs")]: {
+        justifyContent: "center",
+      },
     },
     header: {
       marginTop: "2em",
+      [theme.breakpoints.down("xs")]: {
+        margin: 0,
+      },
     },
     logout: {
       marginTop: "12px",
