@@ -33,5 +33,12 @@ function newState(): state {
 export const friendsSlice = createSlice({
   name: "friends",
   initialState: newState(),
-  reducers: {},
+  reducers: {
+    resetError: (state) => {
+      state.error = "none";
+    }
+  },
 });
+
+// List of direct actions
+export const { resetError } = friendsSlice.actions;
