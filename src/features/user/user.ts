@@ -48,14 +48,14 @@ export const userSlice = createSlice({
     },
     successLogin: (state, action: PayloadAction<SuccessLoginPayload>) => {
       const { username, status } = action.payload;
-      state = Object.assign(state, { loading: false, username, status });
+      Object.assign(state, { loading: false, username, status });
     },
     failureLogin: (state, action: PayloadAction<FailureLoginPayload>) => {
       state.loading = false;
       state.error = action.payload.error;
     },
     onLogout: (state) => {
-      state = Object.assign(state, newState());
+      Object.assign(state, newState());
     },
     resetError: (state) => {
       state.error = "none";
