@@ -47,8 +47,8 @@ export const userSlice = createSlice({
       state.loading = true;
     },
     successLogin: (state, action: PayloadAction<SuccessLoginPayload>) => {
-      state.loading = false;
-      state.username = action.payload.username;
+      const { username, status } = action.payload;
+      state = Object.assign(state, { loading: false, username, status });
     },
     failureLogin: (state, action: PayloadAction<FailureLoginPayload>) => {
       state.loading = false;

@@ -30,12 +30,15 @@ export default function Home() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const { username } = useSelector((state: RootState) => state.user);
+  const { username, status } = useSelector((state: RootState) => state.user);
 
   return (
     <Container className={classes.container}>
       <Typography variant="h4" classes={{ root: classes.header }}>
-        You are logged in as {username}
+        {username}
+      </Typography>
+      <Typography variant="h6" color="primary">
+        {status}
       </Typography>
       <Button
         variant="contained"
