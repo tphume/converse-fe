@@ -20,3 +20,18 @@ interface state {
   loading: boolean;
   error: error;
 }
+
+function newState(): state {
+  return {
+    friends: [],
+    loading: false,
+    error: "none",
+  };
+}
+
+// Create reducers, actions and state
+export const friendsSlice = createSlice({
+  name: "friends",
+  initialState: newState(),
+  reducers: {},
+});
