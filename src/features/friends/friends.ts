@@ -28,8 +28,25 @@ function newState(): state {
   };
 }
 
+// API calls
+function fetchFriendsAPI(token: string): Promise<Map<string, friend>> {
+  let temp = new Map<string, friend>();
+  temp.set("1", { username: "JohnBoyega", status: "im so lonely" });
+  temp.set("2", { username: "Lulu", status: "gimme some snacks" });
+  temp.set("3", { username: "Bob", status: "let me build it" });
+
+  return new Promise<Map<string, friend>>((resolve) => {
+    setTimeout(resolve.bind(null, temp), 1000);
+  });
+}
+
 // Create thunk
-const fetchFriends = createAsyncThunk("friends/fetchFriends", async () => {});
+const fetchFriends = createAsyncThunk(
+  "friends/fetchFriends",
+  async (token: string, { rejectWithValue }) => {
+    return await fetchFriendsAPI(token);
+  }
+);
 
 // Create reducers, actions and state
 export const friendsSlice = createSlice({
