@@ -4,7 +4,6 @@ import {
   PayloadAction,
   Dispatch,
 } from "@reduxjs/toolkit";
-import { AppThunk } from "../../store";
 
 // Error types
 type error = "none" | "network error";
@@ -16,18 +15,21 @@ interface friend {
 }
 
 interface state {
-  friends: Array<friend>;
+  friends: Map<string, friend>;
   loading: boolean;
   error: error;
 }
 
 function newState(): state {
   return {
-    friends: [],
+    friends: new Map(),
     loading: false,
     error: "none",
   };
 }
+
+// Create thunk
+const fetchFriends = createAsyncThunk("friends/fetchFriends", async () => {});
 
 // Create reducers, actions and state
 export const friendsSlice = createSlice({
@@ -36,7 +38,21 @@ export const friendsSlice = createSlice({
   reducers: {
     resetError: (state) => {
       state.error = "none";
-    }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchFriends.pending, (state) => {
+        state.error = "none";
+        state.loading = true;
+      })
+      .addCase(fetchFriends.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(fetchFriends.rejected, (state) => {
+        state.error = "network error";
+        state.loading = false;
+      });
   },
 });
 
