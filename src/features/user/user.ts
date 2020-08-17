@@ -12,6 +12,7 @@ interface UserArgs {
 
 // Payload types for each action
 interface SuccessLoginPayload {
+  token: string;
   username: string;
   status: string;
 }
@@ -22,6 +23,7 @@ interface FailureLoginPayload {
 
 // Interface for the state
 interface state {
+  token: string;
   username: string;
   status: string;
   loading: boolean;
@@ -30,6 +32,7 @@ interface state {
 
 function newState(): state {
   return {
+    token: "",
     username: "",
     status: "",
     loading: false,
@@ -47,8 +50,8 @@ export const userSlice = createSlice({
       state.loading = true;
     },
     successLogin: (state, action: PayloadAction<SuccessLoginPayload>) => {
-      const { username, status } = action.payload;
-      Object.assign(state, { loading: false, username, status });
+      const { username, status, token } = action.payload;
+      Object.assign(state, { loading: false, username, status, token });
     },
     failureLogin: (state, action: PayloadAction<FailureLoginPayload>) => {
       state.loading = false;
@@ -73,13 +76,19 @@ const {
 } = userSlice.actions;
 
 // API calls
-function loginAPI(user: UserArgs): Promise<string> {
+function loginAPI(user: UserArgs): Promise<{ status: string; token: string }> {
   if (user.username.length < 4 || user.password.length < 5) {
     throw new Error("bad request");
   }
 
-  return new Promise<string>((resolve) =>
-    setTimeout(resolve.bind(null, "this is a placeholder status na ja"), 1000)
+  return new Promise<{ status: string; token: string }>((resolve) =>
+    setTimeout(
+      resolve.bind(null, {
+        status: "this is a placeholder status na ja",
+        token: "faketoken",
+      }),
+      1000
+    )
   );
 }
 
@@ -88,8 +97,8 @@ export function login(args: UserArgs): AppThunk {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(beginLogin());
-      const status = await loginAPI(args);
-      return dispatch(successLogin({ username: args.username, status }));
+      const { status, token } = await loginAPI(args);
+      return dispatch(successLogin({ username: args.username, status, token }));
     } catch (e) {
       switch (e.toString()) {
         case "Error: bad request":

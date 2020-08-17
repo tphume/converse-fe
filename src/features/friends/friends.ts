@@ -29,7 +29,7 @@ function newState(): state {
 }
 
 // API calls
-function fetchFriendsAPI(token: string): Promise<Map<string, friend>> {
+export function fetchFriendsAPI(token: string): Promise<Map<string, friend>> {
   let temp = new Map<string, friend>();
   temp.set("1", { username: "JohnBoyega", status: "im so lonely" });
   temp.set("2", { username: "Lulu", status: "gimme some snacks" });
