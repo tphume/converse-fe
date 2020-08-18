@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 type error = "none" | "network error";
 
 // State definition
-interface friend {
+export interface friend {
   username: string;
   status: string;
 }
@@ -64,6 +64,9 @@ export const friendsSlice = createSlice({
       .addCase(fetchFriends.rejected, (state) => {
         state.error = "network error";
         state.loading = false;
+      })
+      .addCase("/user/logout", (state) => {
+        state = Object.assign(state, newState());
       });
   },
 });
