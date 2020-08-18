@@ -36,7 +36,7 @@ export function fetchFriendsAPI(token: string): Promise<Map<string, friend>> {
 }
 
 // Create thunk
-const fetchFriends = createAsyncThunk(
+export const fetchFriends = createAsyncThunk(
   "friends/fetchFriends",
   async (token: string, { rejectWithValue }) => {
     return await fetchFriendsAPI(token);
@@ -70,3 +70,5 @@ export const friendsSlice = createSlice({
 
 // List of direct actions
 export const { resetError } = friendsSlice.actions;
+
+export default friendsSlice.reducer;
