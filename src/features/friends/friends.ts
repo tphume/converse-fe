@@ -38,7 +38,7 @@ export function fetchFriendsAPI(token: string): Promise<Map<string, friend>> {
 // Create thunk
 export const fetchFriends = createAsyncThunk(
   "friends/fetchFriends",
-  async (token: string, { rejectWithValue }) => {
+  async (token: string) => {
     return await fetchFriendsAPI(token);
   }
 );

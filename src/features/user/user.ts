@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, Dispatch } from "@reduxjs/toolkit";
 import { AppThunk } from "../../store";
+import { fetchFriends } from "../friends/friends";
 
 // Error types
 type error = "none" | "bad request" | "match not found" | "network error";
@@ -94,11 +95,12 @@ function loginAPI(user: UserArgs): Promise<{ status: string; token: string }> {
 
 // Export thunks
 export function login(args: UserArgs): AppThunk {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch<any>) => {
     try {
       dispatch(beginLogin());
       const { status, token } = await loginAPI(args);
-      return dispatch(successLogin({ username: args.username, status, token }));
+      dispatch(successLogin({ username: args.username, status, token }));
+      return dispatch(fetchFriends(token));
     } catch (e) {
       switch (e.toString()) {
         case "Error: bad request":
