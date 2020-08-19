@@ -9,22 +9,29 @@ export function fetchFriendsAPI(token: string): Promise<Array<friend>> {
   temp.push({
     id: "1",
     username: "JohnBoyega",
-    status: "im so lonely",
+    status:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
     online: true,
   });
   temp.push({
     id: "2",
     username: "Lulu",
-    status: "gimme some snacks",
+    status: "Duis lobortis arcu est, quis viverra dolor efficitur in.",
     online: false,
   });
   temp.push({
     id: "3",
     username: "Bob",
-    status: "let me build it",
+    status: "Integer bibendum mollis lacus mollis vulputate",
     online: true,
   });
-  temp.push({ id: "4", username: "Sally", status: "oh hi", online: true });
+  temp.push({
+    id: "4",
+    username: "Sally",
+    status:
+      "Integer at auctor tortor, id tincidunt tortor. Sed efficitur tristique turpis et pulvinar",
+    online: true,
+  });
 
   return new Promise<Array<friend>>((resolve) => {
     setTimeout(resolve.bind(null, temp), 1000);

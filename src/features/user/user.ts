@@ -77,15 +77,15 @@ const {
 } = userSlice.actions;
 
 // API calls
-function loginAPI(user: UserArgs): Promise<{ status: string; token: string }> {
+function loginAPI(user: UserArgs): Promise<{ status: string; token: string; }> {
   if (user.username.length < 4 || user.password.length < 5) {
     throw new Error("bad request");
   }
 
-  return new Promise<{ status: string; token: string }>((resolve) =>
+  return new Promise<{ status: string; token: string; }>((resolve) =>
     setTimeout(
       resolve.bind(null, {
-        status: "this is a placeholder status na ja",
+        status: "Pellentesque molestie leo vitae lectus porta varius",
         token: "faketoken",
       }),
       1000
