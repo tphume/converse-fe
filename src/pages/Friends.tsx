@@ -2,13 +2,24 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../rootReducer";
 
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
+const useStyles = makeStyles((theme: Theme) => {
+  return createStyles({
+    container: {
+      width: "100%",
+    },
+  });
+});
+
 export default function Friends(): JSX.Element {
+  const classes = useStyles();
   const { friends, loading } = useSelector((state: RootState) => state.friends);
 
   if (loading) {
@@ -29,20 +40,24 @@ export default function Friends(): JSX.Element {
   }
 
   return (
-    <section>
-      {friends.map((friend) => {
-        return (
-          <Card key={friend.id}>
-            <CardContent>
-              <Typography color="primary">{friend.username}:</Typography>
-              <Typography>"{friend.status}"</Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">message</Button>
-            </CardActions>
-          </Card>
-        );
-      })}
+    <section className={classes.container}>
+      <Grid container>
+        {friends.map((friend) => {
+          return (
+            <Grid item xs={12} sm={4} md={3}>
+              <Card key={friend.id}>
+                <CardContent>
+                  <Typography color="primary">{friend.username}:</Typography>
+                  <Typography>"{friend.status}"</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">message</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          );
+        })}
+      </Grid>
     </section>
   );
 }
