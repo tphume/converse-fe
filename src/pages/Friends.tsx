@@ -15,6 +15,15 @@ const useStyles = makeStyles((theme: Theme) => {
     container: {
       width: "100%",
     },
+    card: {
+      margin: "5px",
+    },
+    header: {
+      fontSize: "1.4em",
+    },
+    text: {
+      fontSize: "1em",
+    },
   });
 });
 
@@ -45,13 +54,19 @@ export default function Friends(): JSX.Element {
         {friends.map((friend) => {
           return (
             <Grid item xs={12} sm={4} md={3}>
-              <Card key={friend.id}>
+              <Card key={friend.id} classes={{ root: classes.card }}>
                 <CardContent>
-                  <Typography color="primary">{friend.username}:</Typography>
-                  <Typography>"{friend.status}"</Typography>
+                  <Typography color="primary" className={classes.header}>
+                    {friend.username}
+                  </Typography>
+                  <Typography className={classes.text}>
+                    "{friend.status}"
+                  </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">message</Button>
+                  <Button size="small" color="primary">
+                    message
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
