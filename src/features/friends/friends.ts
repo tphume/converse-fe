@@ -6,9 +6,25 @@ type error = "none" | "network error";
 // API calls
 export function fetchFriendsAPI(token: string): Promise<Array<friend>> {
   let temp = new Array<friend>();
-  temp.push({ id: "1", username: "JohnBoyega", status: "im so lonely" });
-  temp.push({ id: "2", username: "Lulu", status: "gimme some snacks" });
-  temp.push({ id: "3", username: "Bob", status: "let me build it" });
+  temp.push({
+    id: "1",
+    username: "JohnBoyega",
+    status: "im so lonely",
+    online: true,
+  });
+  temp.push({
+    id: "2",
+    username: "Lulu",
+    status: "gimme some snacks",
+    online: false,
+  });
+  temp.push({
+    id: "3",
+    username: "Bob",
+    status: "let me build it",
+    online: true,
+  });
+  temp.push({ id: "4", username: "Sally", status: "oh hi", online: true });
 
   return new Promise<Array<friend>>((resolve) => {
     setTimeout(resolve.bind(null, temp), 1000);
@@ -20,6 +36,7 @@ export interface friend {
   id: string;
   username: string;
   status: string;
+  online: boolean;
 }
 
 interface state {
