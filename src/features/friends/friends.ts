@@ -3,36 +3,37 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // Error types
 type error = "none" | "network error";
 
+// API calls
+export function fetchFriendsAPI(token: string): Promise<Array<friend>> {
+  let temp = new Array<friend>();
+  temp.push({ id: "1", username: "JohnBoyega", status: "im so lonely" });
+  temp.push({ id: "2", username: "Lulu", status: "gimme some snacks" });
+  temp.push({ id: "3", username: "Bob", status: "let me build it" });
+
+  return new Promise<Array<friend>>((resolve) => {
+    setTimeout(resolve.bind(null, temp), 1000);
+  });
+}
+
 // State definition
 export interface friend {
+  id: string;
   username: string;
   status: string;
 }
 
 interface state {
-  friends: Map<string, friend>;
+  friends: Array<friend>;
   loading: boolean;
   error: error;
 }
 
 function newState(): state {
   return {
-    friends: new Map(),
+    friends: new Array<friend>(),
     loading: false,
     error: "none",
   };
-}
-
-// API calls
-export function fetchFriendsAPI(token: string): Promise<Map<string, friend>> {
-  let temp = new Map<string, friend>();
-  temp.set("1", { username: "JohnBoyega", status: "im so lonely" });
-  temp.set("2", { username: "Lulu", status: "gimme some snacks" });
-  temp.set("3", { username: "Bob", status: "let me build it" });
-
-  return new Promise<Map<string, friend>>((resolve) => {
-    setTimeout(resolve.bind(null, temp), 1000);
-  });
 }
 
 // Create thunk
@@ -59,6 +60,7 @@ export const friendsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchFriends.fulfilled, (state, action) => {
+        state.friends = action.payload;
         state.loading = false;
       })
       .addCase(fetchFriends.rejected, (state) => {
