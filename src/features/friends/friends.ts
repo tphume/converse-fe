@@ -67,7 +67,7 @@ export const friendsSlice = createSlice({
         state.error = "network error";
         state.loading = false;
       })
-      .addCase("/user/logout", (state) => {
+      .addCase("user/logout", (state) => {
         state = Object.assign(state, newState());
       });
   },
