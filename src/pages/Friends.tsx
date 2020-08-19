@@ -5,7 +5,15 @@ import { RootState } from "../rootReducer";
 import Typography from "@material-ui/core/Typography";
 
 export default function Friends(): JSX.Element {
-  const { friends } = useSelector((state: RootState) => state.friends);
+  const { friends, loading } = useSelector((state: RootState) => state.friends);
+
+  if (loading) {
+    return (
+      <section>
+        <Typography variant="h2">Loading friends...</Typography>
+      </section>
+    );
+  }
 
   if (friends.length === 0) {
     return (
