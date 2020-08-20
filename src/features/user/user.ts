@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, Dispatch } from "@reduxjs/toolkit";
 import { AppThunk } from "../../store";
+import { fetchFriends } from "../friends/friends";
 
 // Error types
 type error = "none" | "bad request" | "match not found" | "network error";
@@ -12,7 +13,9 @@ interface UserArgs {
 
 // Payload types for each action
 interface SuccessLoginPayload {
+  token: string;
   username: string;
+  status: string;
 }
 
 interface FailureLoginPayload {
@@ -21,14 +24,18 @@ interface FailureLoginPayload {
 
 // Interface for the state
 interface state {
+  token: string;
   username: string;
+  status: string;
   loading: boolean;
   error: error;
 }
 
 function newState(): state {
   return {
+    token: "",
     username: "",
+    status: "",
     loading: false,
     error: "none",
   };
@@ -44,17 +51,15 @@ export const userSlice = createSlice({
       state.loading = true;
     },
     successLogin: (state, action: PayloadAction<SuccessLoginPayload>) => {
-      state.loading = false;
-      state.username = action.payload.username;
+      const { username, status, token } = action.payload;
+      Object.assign(state, { loading: false, username, status, token });
     },
     failureLogin: (state, action: PayloadAction<FailureLoginPayload>) => {
       state.loading = false;
       state.error = action.payload.error;
     },
-    onLogout: (state) => {
-      state.username = "";
-      state.loading = false;
-      state.error = "none";
+    logout: (state) => {
+      Object.assign(state, newState());
     },
     resetError: (state) => {
       state.error = "none";
@@ -67,26 +72,35 @@ const {
   beginLogin,
   successLogin,
   failureLogin,
-  onLogout,
+  logout,
   resetError,
 } = userSlice.actions;
 
 // API calls
-function loginAPI(user: UserArgs): Promise<void> {
+function loginAPI(user: UserArgs): Promise<{ status: string; token: string }> {
   if (user.username.length < 4 || user.password.length < 5) {
     throw new Error("bad request");
   }
 
-  return new Promise<void>((resolve) => setTimeout(resolve, 1000));
+  return new Promise<{ status: string; token: string }>((resolve) =>
+    setTimeout(
+      resolve.bind(null, {
+        status: "Pellentesque molestie leo vitae lectus porta varius",
+        token: "faketoken",
+      }),
+      1000
+    )
+  );
 }
 
 // Export thunks
 export function login(args: UserArgs): AppThunk {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch<any>) => {
     try {
       dispatch(beginLogin());
-      await loginAPI(args);
-      return dispatch(successLogin({ username: args.username }));
+      const { status, token } = await loginAPI(args);
+      dispatch(successLogin({ username: args.username, status, token }));
+      return dispatch(fetchFriends(token));
     } catch (e) {
       switch (e.toString()) {
         case "Error: bad request":
@@ -98,15 +112,8 @@ export function login(args: UserArgs): AppThunk {
   };
 }
 
-// Clear state
-export function logout(): AppThunk {
-  return async (dispatch: Dispatch) => {
-    dispatch(onLogout());
-  };
-}
-
 // Export helper actions
-export { resetError };
+export { resetError, logout };
 
 // Export reducer on configure store only
 export default userSlice.reducer;
