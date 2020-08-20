@@ -64,7 +64,7 @@ function ListItemLink(props: ListProps) {
   );
 
   const classes = useListStyles();
-  const color = isCurrent(current, to);
+  const color = isCurrent(to, current);
 
   return (
     <li className={color ? classes.list : classes.empty}>
@@ -181,13 +181,21 @@ export default function NavBar() {
 }
 
 // Helper function to set colors
-function isCurrent(current: string, route: string): boolean {
+function isCurrent(route: string, current: string): boolean {
+  if (route !== "/") {
+    return current.includes(route) ? true : false;
+  }
+
   return current === route ? true : false;
 }
 
 function setIconColor(
-  current: string,
-  route: string
+  route: string,
+  current: string
 ): "inherit" | "primary" | "secondary" | "action" | "disabled" | "error" {
+  if (route !== "/") {
+    return current.includes(route) ? "primary" : "inherit";
+  }
+
   return current === route ? "primary" : "inherit";
 }
