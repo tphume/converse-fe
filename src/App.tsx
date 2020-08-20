@@ -46,7 +46,7 @@ export default function App() {
           <Route exact path="/friends">
             <Friends />
           </Route>
-          <Route exact path="/messages">
+          <Route path="/messages">
             <Messages />
           </Route>
           <Route exact path="/help">
