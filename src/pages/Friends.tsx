@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../rootReducer";
 
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) => {
 export default function Friends(): JSX.Element {
   const classes = useStyles();
   const { friends, loading } = useSelector((state: RootState) => state.friends);
+  const history = useHistory();
 
   if (loading) {
     return (
@@ -84,6 +85,9 @@ export default function Friends(): JSX.Element {
                     color="primary"
                     variant="outlined"
                     endIcon={<SendIcon />}
+                    onClick={() => {
+                      history.push(`/messages/${friend.username}`);
+                    }}
                   >
                     message
                   </Button>
