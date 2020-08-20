@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../rootReducer";
 
@@ -9,6 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
@@ -17,11 +19,11 @@ const useStyles = makeStyles((theme: Theme) => {
     },
     cardOnline: {
       margin: "8px 6px 8px 6px",
-      borderLeft: "5px solid #66bb6a",
+      borderColor: theme.palette.primary.main,
     },
     cardOffline: {
       margin: "8px 6px 8px 6px",
-      borderLeft: "5px solid #ef5350",
+      borderColor: "#ef5350",
     },
     header: {
       fontSize: "1.4em",
@@ -61,6 +63,7 @@ export default function Friends(): JSX.Element {
             <Grid item xs={12} sm={4} md={3}>
               <Card
                 key={friend.id}
+                variant="outlined"
                 classes={
                   friend.online
                     ? { root: classes.cardOnline }
@@ -76,7 +79,12 @@ export default function Friends(): JSX.Element {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    endIcon={<SendIcon />}
+                  >
                     message
                   </Button>
                 </CardActions>
